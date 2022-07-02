@@ -8,10 +8,10 @@
 #include "iostream"
 #include "string"
 #include "vector"
-#include "fstream"
 #include "stdio.h"
 #include "sstream"
 #include "stdlib.h"
+#include "algorithm"
 #include "ctime"
 #include <cstring>
 #include <cstdlib>
@@ -20,6 +20,7 @@
 #include <ctime>
 #include <iomanip>
 #include <codecvt>
+#include "fstream"
 
 #pragma once
 

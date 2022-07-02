@@ -1,6 +1,9 @@
-#include <iostream>
+
+#include "controllers/app.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    App app;
+    app.start();
+
     return 0;
 }

@@ -11,26 +11,25 @@ public:
     RoomService roomService;
     void start(){
 
-        menu();
-//        char option;
-//        do {
-//
-//        cout<<"                  HOTEL MANAGEMENT SYSTEM                                "<<endl;
-//        cout<<"                1. REGISTER                                              "<<endl;
-//        cout<<"                2. LOGIN                                                 "<<endl;
-//        cin>>option;
-//        switch (option) {
-//            case '1':
-//                signUp();
-//                break;
-//            case '2':
-//                login();
-//                break;
-//            default:
-//                cout<<"Invalid option"<<endl;
-//                break;
-//        }
-//        } while (option != '2');
+        char option;
+        do {
+
+        cout<<"                  HOTEL MANAGEMENT SYSTEM                                "<<endl;
+        cout<<"                1. REGISTER                                              "<<endl;
+        cout<<"                2. LOGIN                                                 "<<endl;
+        cin>>option;
+        switch (option) {
+            case '1':
+                signUp();
+                break;
+            case '2':
+                login();
+                break;
+            default:
+                cout<<"Invalid option"<<endl;
+                break;
+        }
+        } while (option != '2');
     }
     void menu(){
         char choice;

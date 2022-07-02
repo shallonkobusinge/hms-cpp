@@ -66,10 +66,17 @@ public:
                 reserve();
                 break;
             case '7':
+                displayList(RoomService::allReservedRooms());
                 break;
             case '8':
+                int id;
+                cout<<"Enter the reservation room id: ";
+                cin>>id;
+                displayOneRoomList(RoomService::getReservedRooms(id));
                 break;
             case '9':
+                system("CLS");
+                start();
                 break;
             default:
                 cout<<"Invalid option"<<endl;
@@ -133,6 +140,16 @@ public:
         for(int i=0; !list.empty(); i++){
             cout<<list[i].getRoomId()<<"           "<<list[i].getRoomPrice()<<"           "<<list[i].getStatus()<<"           "<<list[i].getUserId()<<endl;
         }
+        cout<<"  ------------------------------------------------------------------------------------------------- "<<endl;
+    }
+    void displayOneRoomList(Room list){
+
+        cout<<" ROOM LIST "<<endl;
+        cout<<"  ------------------------------------------------------------------------------------------------ "<<endl;
+        cout<<"  | Room Id           | Room Price           | Status           "<<"| User Id           "<<endl;
+
+            cout<<list.getRoomId()<<"           "<<list.getRoomPrice()<<"           "<<list.getStatus()<<"           "<<list.getUserId()<<endl;
+
         cout<<"  ------------------------------------------------------------------------------------------------- "<<endl;
     }
     void findRoomById(){

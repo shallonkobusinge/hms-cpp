@@ -135,4 +135,26 @@ public:
         rename("temp.txt", "rooms.txt");
 
     }
+    static Room getReservedRooms(int roomId){
+        vector<Room> all = getAllRoomsList();
+        Room reservedRoom;
+        for(int i=0; i<all.size(); i++){
+            if(all[i].getRoomId() == roomId && all[i].getStatus() == "RESERVED"){
+                    reservedRoom = all[i];
+            }
+
+        }
+        return reservedRoom;
+
+    }
+    static vector<Room> allReservedRooms(){
+        vector<Room> all = getAllRoomsList();
+        vector<Room> reservedRooms;
+        for(int i=0; i<all.size(); i++){
+            if(all[i].getStatus() == "RESERVED"){
+                reservedRooms.push_back(all[i]);
+            }
+        }
+        return reservedRooms;
+    }
 };

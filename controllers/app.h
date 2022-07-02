@@ -3,21 +3,79 @@
 //
 
 
-#include "../utils/headers.h"
 #include "../services/RoomService.h"
-#include "../services/UserService.h"
 
 class App{
 public:
     UserService userService;
     RoomService roomService;
     void start(){
-//        signUp();
-//        login();
-        vector<User> all = userService.returnAllUsers();
-        for(int i=0;i<all.size();i++){
-            cout<<all[i].getUserId()<<" "<<all[i].getUsername()<<" "<<all[i].getRole()<<" "<<all[i].getPassword()<<endl;
+
+        menu();
+//        char option;
+//        do {
+//
+//        cout<<"                  HOTEL MANAGEMENT SYSTEM                                "<<endl;
+//        cout<<"                1. REGISTER                                              "<<endl;
+//        cout<<"                2. LOGIN                                                 "<<endl;
+//        cin>>option;
+//        switch (option) {
+//            case '1':
+//                signUp();
+//                break;
+//            case '2':
+//                login();
+//                break;
+//            default:
+//                cout<<"Invalid option"<<endl;
+//                break;
+//        }
+//        } while (option != '2');
+    }
+    void menu(){
+        char choice;
+        do{
+        cout<<"                  HOTEL MANAGEMENT SYSTEM                                "<<endl;
+        cout<<"                1. CREATE A ROOM                                         "<<endl;
+        cout<<"                2. DELETE A ROOM                                         "<<endl;
+        cout<<"                3. LIST ALL ROOM                                         "<<endl;
+        cout<<"                4. FIND A ROOM BY ID                                     "<<endl;
+        cout<<"                5. UPDATE A ROOM                                         "<<endl;
+        cout<<"                6. RESERVE A ROOM                                        "<<endl;
+        cout<<"                7. LIST ALL RESERVATIONS                                 "<<endl;
+        cout<<"                8. FIND A RESERVATION BY ID                              "<<endl;
+        cout<<"                9. LOGOUT                                                "<<endl;
+        cin>>choice;
+        switch(choice){
+            case '1':
+                createRoom();
+                break;
+            case '2':
+                RoomService::deleteRoomById();
+                break;
+            case '3':
+                displayList(RoomService::getAllRoomsList());
+                break;
+            case '4':
+                findRoomById();
+                break;
+            case '5':
+                update();
+                break;
+            case '6':
+                reserve();
+                break;
+            case '7':
+                break;
+            case '8':
+                break;
+            case '9':
+                break;
+            default:
+                cout<<"Invalid option"<<endl;
+                break;
         }
+        } while (choice!='9');
     }
     void login(){
         string username, password;
@@ -27,7 +85,13 @@ public:
         cout << "Enter password: ";
         cin>>password;
         User user = User(username,password);
-        userService.LoginUser(username, password);
+        string message = userService.LoginUser(username, password);
+       if(message == "Logged in succesfully"){
+           cout<<"Welcome "<<username<<endl;
+           menu();
+       }else{
+           cout<<message<<endl;
+       }
     }
     void signUp(){
         string username,role,password;
@@ -43,6 +107,59 @@ public:
             c = toupper(c);
         });
         User user = User(username,role,password);
-        userService.RegisterUser(user);
+        UserService::RegisterUser(user);
+    }
+    void createRoom(){
+        int userId,roomPrice, roomId;
+        string status;
+        cout<<" CREATE A ROOM "<<endl;
+        cout<<" Enter user id: ";
+        cin>>userId;
+        cout<<" Enter room price: ";
+        cin>>roomPrice;
+        cout<<" Enter status: ";
+        cin>>status;
+        for_each(status.begin(), status.end(), [](char &c){
+            c = toupper(c);
+        });
+        RoomDTO room = RoomDTO(userId,roomPrice,status);
+        RoomService::createRoom(room);
+    }
+    void displayList(vector<Room> list){
+
+        cout<<" ROOM LIST "<<endl;
+        cout<<"  ------------------------------------------------------------------------------------------------ "<<endl;
+        cout<<"  | Room Id           | Room Price           | Status           "<<"| User Id           "<<endl;
+        for(int i=0; !list.empty(); i++){
+            cout<<list[i].getRoomId()<<"           "<<list[i].getRoomPrice()<<"           "<<list[i].getStatus()<<"           "<<list[i].getUserId()<<endl;
+        }
+        cout<<"  ------------------------------------------------------------------------------------------------- "<<endl;
+    }
+    void findRoomById(){
+        int id;
+        cout<<" Enter the id of the room "<<endl;
+        cin>>id;
+        Room room = RoomService::getRoomById(id);
+        cout<<" Room Id: "<<room.getRoomId()<<endl;
+        cout<<" Room Price: "<<room.getRoomPrice()<<endl;
+        cout<<" Status: "<<room.getStatus()<<endl;
+        cout<<" User Id: "<<room.getUserId()<<endl;
+
+    }
+    void update(){
+        int id,roomPrice;
+        cout<<" Enter the id of the room "<<endl;
+        cin>>id;
+        Room room = RoomService::getRoomById(id);
+        cout<<"  Enter the new room price: "<<endl;
+        cin>>roomPrice;
+        room.setRoomPrice(roomPrice);
+        RoomService::updateRoom(id,room);
+    }
+    void reserve(){
+        int id;
+        cout<<" Enter the id of the room to reserve "<<endl;
+        cin>>id;
+        RoomService::makeReservation(id);
     }
 };

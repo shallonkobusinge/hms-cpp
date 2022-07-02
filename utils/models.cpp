@@ -17,12 +17,7 @@ private:
     string role;
     string password;
 public:
-    User(){
-        userId = 0;
-        username = "";
-        role = USER;
-        password = "";
-    }
+    User(){}
     User( string username, string role, string password){
         this->username = username;
         this->role = role;
@@ -68,19 +63,15 @@ class Room{
 private:
     int roomPrice;
     int roomId;
-    User user;
+    string status;
+    int userId;
 public:
-    Room(){
-        roomPrice = 0;
-        roomId = 0;
-        user = User();
-    }
-    Room(int roomPrice, int roomId, User user){
+     Room(){}
+     Room(int roomPrice, string status, int userId){
         this->roomPrice = roomPrice;
-        this->roomId = roomId;
-        this->user = user;
-    }
-
+        this->status = status;
+        this->userId = userId;
+     }
     int getRoomPrice() {
         return roomPrice;
     }
@@ -93,12 +84,58 @@ public:
     void setRoomId(int roomId) {
         this->roomId = roomId;
     }
-    User getUser() {
-        return user;
+    int getUserId() const {
+        return userId;
     }
-    void setUser(User user) {
-        this->user = user;
+    void setUserId(int user) {
+        this->userId = user;
+    }
+    string getStatus(){
+        return status;
+    }
+    void setStatus(string status){
+        this->status = status;
     }
 
 };
 
+
+class RoomDTO{
+private:
+    int userId;
+    int roomPrice;
+    int roomId;
+    string status;
+public:
+    RoomDTO(int userId, int roomPrice, string status){
+        this->userId = userId;
+        this->roomPrice = roomPrice;
+        this->status = status;
+    }
+    int getUserId(){
+        return userId;
+    }
+    void setUserId(int userId){
+        this->userId = userId;
+    }
+    string getStatus(){
+        return status;
+    }
+    void setStatus(string status){
+        this->status = status;
+    }
+    int getRoomPrice(){
+        return roomPrice;
+    }
+    void setRoomPrice(int roomPrice){
+        this->roomPrice = roomPrice;
+    }
+    int getRoomId(){
+        return roomId;
+    }
+    void setRoomId(int roomId){
+        this->roomId = roomId;
+    }
+
+
+};

@@ -3,11 +3,10 @@
 //
 
 #include "../utils/models.cpp"
-#include "../utils/headers.h"
 
 class UserService {
 public:
-    User RegisterUser(User user){
+    static User RegisterUser(User user){
         ofstream file;
         file.open("users.txt", ios::app);
         bool userExists = userExistsByUsername(user.getUsername());
@@ -19,60 +18,69 @@ public:
         user.setUserId(lastId+1);
         file << user.getUserId() << "  " << user.getUsername() << "  " << user.getRole() << "  " << user.getPassword() << "  "<< endl;
         file.close();
-        return User(user.getUserId(),user.getUsername(),user.getRole(),user.getPassword());
+        return {user.getUserId(),user.getUsername(),user.getRole(),user.getPassword()};
     };
-    User LoginUser(string username, string password){
-
+    static string LoginUser(const string& username, const string& password){
+        string message;
         bool userExists = userExistsByUsername(username);
         if(!userExists){
-
-            cout<<"User does not exist"<<endl;
-            return User();
+            return "User does not exist";
         }
         User user = getUserByUsername(username);
         if(user.getPassword() != password){
-            cout<<"Password is incorrect"<<endl;
-            return User();
+            return "Password is incorrect";
         }
-        cout<<" Logged in succesfully"<<endl;
-        return user;
+        return "Logged in succesfully";
     };
-    bool userExistsByUsername(string user){
+    static bool userExistsByUsername(string user){
         vector<User> users = returnAllUsers();
         bool exists = false;
-        for(int i= 0; i<users.size(); i++){
-            if(users[i].getUsername() == user){
+        for(auto & i : users){
+            if(i.getUsername() == user){
                 exists = true;
                 return exists;
             }
         }
         return exists;
     }
-    User GetUser(int userId){
-        User user;
-        vector<User> all = returnAllUsers();
-        for(int i=0;i<all.size();i++){
-            if(all[i].getUserId() == userId){
-                return all[i];
-            }
-        }
-    };
     void UpdateUser(int userId,User user){
 
     };
     void DeleteUser(int userId){
 
     };
-    User getUserByUsername(string username){
+    static bool userExistsById(int id){
         vector<User> users = returnAllUsers();
-        for(int i=0; i<users.size(); i++){
-            if(users[i].getUsername() == username){
-                return users[i];
+        bool exists = false;
+        for(auto & i : users){
+            if(i.getUserId() == id){
+                exists = true;
+                return exists;
             }
         }
-        return User();
+        return exists;
+    }
+    static User findUserById(int id){
+        vector<User> all = returnAllUsers();
+         User user;
+        for(auto & i : all){
+            if(i.getUserId() == id){
+                user = i;
+            }else{
+                cout<<" User not found"<<endl;
+            }
+        }
+        return user;
     };
-
+    static User getUserByUsername(const string& username){
+        vector<User> users = returnAllUsers();
+        for(auto & user : users){
+            if(user.getUsername() == username){
+                return user;
+            }
+        }
+        return {};
+    };
     static User returnSingleUser(const string &line){
         stringstream ss(line);
         User user;
@@ -91,12 +99,12 @@ public:
         }
         return user;
     }
-    int returnLastId(){
+    static int returnLastId(){
         vector<User> all = returnAllUsers();
         int lastId = 0;
-       for(int i=0; i<all.size(); i++){
-           if(all[i].getUserId() > lastId){
-               lastId = all[i].getUserId();
+       for(auto & i : all){
+           if(i.getUserId() > lastId){
+               lastId = i.getUserId();
            }
        }
        return lastId;

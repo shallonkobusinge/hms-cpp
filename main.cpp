@@ -2,7 +2,7 @@
 #include "controllers/app.h"
 
 int main() {
-    App app;
+    App app{};
     app.start();
 
     return 0;

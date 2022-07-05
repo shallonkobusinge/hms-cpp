@@ -114,6 +114,17 @@ public:
         return room;
 
     }
+    static void sortDataInAfile(){
+        vector<Room> rooms = getAllRoomsList();
+        sort(rooms.begin(), rooms.end(), [](Room a, Room b) {
+            return a.getRoomId() < b.getRoomId();
+        });
+        ofstream file("rooms.txt");
+        for(auto & room : rooms){
+            file << room.getRoomId() << "  " <<  room.getRoomPrice() << "  "  << room.getStatus() << "  " << room.getUserId() << "  " << endl;
+        }
+        file.close();
+    }
     static void makeReservation(int roomId){
         Room room = getRoomById(roomId);
         ifstream file("rooms.txt");

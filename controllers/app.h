@@ -43,7 +43,8 @@ public:
         cout<<"                6. RESERVE A ROOM                                        "<<endl;
         cout<<"                7. LIST ALL RESERVATIONS                                 "<<endl;
         cout<<"                8. FIND A RESERVATION BY ID                              "<<endl;
-        cout<<"                9. LOGOUT                                                "<<endl;
+            cout<<"                9. LOGOUT                                                "<<endl;
+            cout<<"                10. Sort                                                "<<endl;
         cin>>choice;
         switch(choice){
             case '1':
@@ -77,6 +78,8 @@ public:
                 system("CLS");
                 start();
                 break;
+            case '10':
+                RoomService::sortDataInAfile();
             default:
                 cout<<"Invalid option"<<endl;
                 break;

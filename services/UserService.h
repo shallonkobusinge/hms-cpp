@@ -88,7 +88,7 @@ public:
         int i=0;
         for(string rowElement; ss >> rowElement;) {
 
-            if (reinterpret_cast<const char *>(rowElement[rowElement.length() - 1] ) == "")
+            if (reinterpret_cast<const char *>(rowElement[rowElement.length() - 1] ) == " ")
                 rowElement.pop_back();
 
             if (i == 0) user.setUserId(stoi(rowElement));
